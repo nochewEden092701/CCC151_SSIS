@@ -497,7 +497,7 @@ for i in rec:
     xlist.append(i[0])
 
 
-title_label = Label(root, text="Student  Information  System", font=("Times New Roman Bold", 20), fg="#371c4b", bg="#BFBEDA")
+title_label = Label(root, text="SSIS Version 2.0", font=("Times New Roman Bold", 20), fg="#371c4b", bg="#BFBEDA")
 title_label.grid(row=0, column=0, columnspan=3, padx=10, ipadx=50)
 
 # Make a frame for search and Title
