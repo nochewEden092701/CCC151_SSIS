@@ -391,24 +391,35 @@ def add2():
 
 
 def delete2():
-    if messagebox.askyesno("Delete Confirmation", "Are you sure to delete this course?") == False:
+    selected = my_tree2.focus()
+    values = my_tree2.item(selected, 'values')
+    course_code = values[0]
+
+    conn = sqlite3.connect("SSIS.db")
+    c = conn.cursor()
+
+    # Check if there are students associated with the course
+    c.execute("SELECT COUNT(*) FROM Student WHERE Course=?", (course_code,))
+    student_count = c.fetchone()[0]
+
+    conn.close()
+
+    if student_count > 0:
+        messagebox.showwarning("Warning", "Cannot delete course with associated students.")
         return
-    else:
+
+    if messagebox.askyesno("Delete Confirmation", "Are you sure to delete this course?"):
         conn = sqlite3.connect("SSIS.db")
         c = conn.cursor()
-        selected = my_tree2.focus()
-        values = my_tree2.item(selected, 'values')
-
-        c.execute("DELETE from Course WHERE Course_Code=?", (values[0],))
-
+        c.execute("DELETE from Course WHERE Course_Code=?", (course_code,))
         conn.commit()
         conn.close()
 
-    addCourse()
-    delete_data2()
-    displaydata2()
-    
-    messagebox.showinfo("Success", "Course deleted successfully!")
+        addCourse()
+        delete_data2()
+        displaydata2()
+
+        messagebox.showinfo("Success", "Course deleted successfully!")
 
 
 def modify2():
