@@ -531,7 +531,7 @@ def search2_course():
     for record in my_tree.get_children():
         my_tree.delete(record)
 
-    x = search_entry.get()
+    x = search_entry2.get()
 
     with open('course.csv', "r") as f:
         reader_file = csv.reader(f)
